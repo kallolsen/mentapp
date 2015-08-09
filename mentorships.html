@@ -1,0 +1,112 @@
+<head>
+  <title>MentApp</title>
+</head>
+
+<!--
+<body>
+	{{> mentorships}}
+</body>
+-->
+
+<template name="mentorships">
+ <!--   <p>{{_id}}</p>   -->
+    {{> addMentorship}}
+    <ul>
+    {{#each mentorship}}
+    	{{> mentorshipItem}}
+    {{/each}}
+    </ul>
+    {{> mentorshipCount}}
+</template>
+
+<template name="mentorshipItem">
+    <li>
+    	<input type="checkbox">
+    	<input type="text" value="{{subject}}" name="mentorshipItem">
+    	Available: {{status}}
+    	[<a href="#" class="delete-mentorship">Delete</a>]
+    </li>
+</template>
+
+<template name="addMentorship">
+	<form>
+        Create a mentorship:
+        <input type="text" placeholder="Type a mentorship here..." name="mentorshipSubject">
+        <input type="submit" value="Add Mentorship">
+    </form>
+</template>
+
+<template name="mentorshipCount">
+	<p>There are {{availableMentorships}} Mentorships available now, out of a total of {{totalMentorships}} Mentorships offered.</p>
+</template>
+
+<template name="home">
+    <p>Welcome to the Mentorships application.</p>
+</template>
+
+<template name="addProjectTopic">
+    <form>Add a new project topic:
+        <input type="text" placeholder="New project topic here..." name="topicName">
+        <input type="submit" value="Add Project Topic">
+    </form>
+</template>
+
+<template name="projects">
+    <h2>Project Topics</h2>
+    {{> addProjectTopic}}
+    <ul>
+        {{#each project}}
+            <li><a href="{{pathFor route='projectPage'}}">{{name}}</a></li>
+        {{/each}}
+    </ul>
+</template>
+
+<template name="projectPage">
+    <h2>Topic: {{name}}</h2>
+    {{> mentorships}}
+</template>
+
+<template name="register">
+    <h2>Register</h2>
+    <form class="register">
+        <p>Email: <input type="email" name="email"></p>
+        <p>Password: <input type="password" name="password"></p>
+        <p><input type="submit" value="Register"></p>
+    </form>
+</template>
+
+
+<template name="main">
+    <h1>MentApp</h1>
+    <p><em>Help mentors and mentees find each other</em></p>
+    {{> navigation}}
+    {{#if currentUser}}
+        {{> projects}}
+    {{/if}}
+    {{> yield}}
+    <hr />
+    <p>Copyright &copy; Mentorships, 2015-2016.</p>
+</template>
+
+<template name="navigation">
+    <ul>
+        <li><a href="{{pathFor route='home'}}">Home</a></li>
+        {{#if currentUser}}
+            <li><a href="#" class="logout">Logout</a></li>
+        {{else}}
+            <li><a href="{{pathFor route='register'}}">Register</a></li>
+            <li><a href="{{pathFor route='login'}}">Login</a></li>
+        {{/if}}
+    </ul>
+</template>
+
+<template name="login">
+    <h2>Login</h2>
+    <form class="login">
+        <p>Email: <input type="email" name="email"></p>
+        <p>Password: <input type="password" name="password"></p>
+        <p><input type="submit" value="Login"></p>
+    </form>
+</template>
+
+
